@@ -9,6 +9,15 @@
     "installed_plugins": {
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "io.cordova.myappa8afee"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "io.cordova.myappa8afee"
+        },
+        "nl.x-services.plugins.socialsharing": {
+            "PACKAGE_NAME": "io.cordova.myappa8afee"
+        },
+        "com.bez4pieci.cookies": {
+            "PACKAGE_NAME": "io.cordova.myappa8afee"
         }
     },
     "dependent_plugins": {}

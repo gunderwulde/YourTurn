@@ -1,16 +1,16 @@
 {
-    "cordova-plugin-whitelist": {
+    "cordova-plugin-inappbrowser": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-whitelist@1"
+            "id": "cordova-plugin-inappbrowser@~1.2.0"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-x-socialsharing": {
+    "cordova-plugin-whitelist": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-x-socialsharing"
+            "id": "cordova-plugin-whitelist@~1.2.1"
         },
         "is_top_level": true,
         "variables": {}

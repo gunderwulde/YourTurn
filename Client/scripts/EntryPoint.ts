@@ -45,9 +45,12 @@ module YourTurn {
             this.scale.maxWidth = window.innerWidth * window.devicePixelRatio;
             this.scale.maxHeight = window.innerHeight * window.devicePixelRatio;
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-
+            //  Unless you specifically need to support multitouch I would recommend setting this to 1
+            this.input.maxPointers = 1;
+            //  Phaser will automatically pause if the browser tab the game is in loses focus. 
+            // You can disable that here:
+            this.stage.disableVisibilityChange = true;
             this.state.start("Boot", true, false);
-
         }
     }
 }

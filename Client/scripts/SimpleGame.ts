@@ -4,12 +4,32 @@
 class SimpleGame {
 
     game: Phaser.Game;
-    fireybase: Firebase;
+    firebase: Firebase;
 
     constructor() {
 //        this.game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.AUTO, 'content', { preload: this.preload, create: this.create });
         this.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, 'content', { preload: this.preload, create: this.create });
-        this.fireybase = new Firebase("https://ecma.firebaseio.com/");
+        this.firebase = new Firebase("https://glaring-torch-9586.firebaseio.com");
+        var dataRef = this.firebase.child("data");
+
+        dataRef.set({ texto: "Hola Mundo" });
+
+        dataRef.on("value", function (snapshot) {
+            console.log(snapshot.val());
+        }, function (errorObject) {
+            console.log("The read failed: " + errorObject.code);
+        });
+
+        this.firebase.authWithOAuthPopup("facebook", function (error, authData) {
+            if (error) {
+                console.log("Login Failed!", error);
+            } else {
+                console.log("Authenticated successfully with payload:", authData);
+            }
+        }, {
+                remember: "sessionOnly",
+                scope: "email,user_likes"
+            });
     }
 
     

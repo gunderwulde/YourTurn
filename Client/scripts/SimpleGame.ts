@@ -11,6 +11,8 @@ class SimpleGame {
 
     preload() {
         this.game.load.image('logo', 'images/phaser2.png');
+
+
     }
 
     create() {

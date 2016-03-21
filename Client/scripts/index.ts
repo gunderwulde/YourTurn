@@ -2,10 +2,12 @@
 // http://go.microsoft.com/fwlink/?LinkID=397705
 // To debug code on page load in Ripple or on Android devices/emulators: launch your app, set breakpoints, 
 // and then run "window.location.reload()" in the JavaScript Console.
+
 module YourTurn {
     "use strict";
 
     export module Application {
+
         export function initialize() {
             document.addEventListener('deviceready', onDeviceReady, false);
         }
@@ -14,7 +16,6 @@ module YourTurn {
             // Handle the Cordova pause and resume events
             document.addEventListener('pause', onPause, false);
             document.addEventListener('resume', onResume, false);
-
             var game = new SimpleGame();
         }
 

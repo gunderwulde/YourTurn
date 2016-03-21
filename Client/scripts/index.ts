@@ -16,7 +16,7 @@ module YourTurn {
             // Handle the Cordova pause and resume events
             document.addEventListener('pause', onPause, false);
             document.addEventListener('resume', onResume, false);
-            var game = new SimpleGame();
+            var game = new EntryPoint();
         }
 
         function onPause() {

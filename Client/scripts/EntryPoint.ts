@@ -3,15 +3,12 @@
 module YourTurn {
     export class EntryPoint extends Phaser.Game {
         firebase: Firebase;
-
         constructor() {
-            super(window.innerWidth, window.innerHeight, Phaser.AUTO, 'content', null);
-            //        this.game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.AUTO, 'content', { preload: this.preload, create: this.create });
+            super(480, 800, Phaser.AUTO, 'content', { create: this.create });
+
             this.firebase = new Firebase("https://glaring-torch-9586.firebaseio.com");
             var dataRef = this.firebase.child("data");
-
             dataRef.set({ texto: "Hola Mundo" });
-
             dataRef.on("value", function (snapshot) {
                 console.log(snapshot.val());
             }, function (errorObject) {
@@ -39,9 +36,18 @@ module YourTurn {
                     scope: "email,user_likes"
             });
             */
-
-            this.state.add("Boot", YourTurn.Boot, true);
+            this.state.add("Boot", YourTurn.Boot);
             this.state.add("Game", YourTurn.Game);
+        }
+
+        create() {
+            //  This sets a limit on the up-scale
+            this.scale.maxWidth = window.innerWidth * window.devicePixelRatio;
+            this.scale.maxHeight = window.innerHeight * window.devicePixelRatio;
+            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+
+            this.state.start("Boot", true, false);
+
         }
     }
 }

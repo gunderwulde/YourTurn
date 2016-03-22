@@ -2,23 +2,25 @@
 module YourTurn {
     export class FireBaseController {
         static Instance: FireBaseController;
-        userid: string;
-        userURL: string;
+
+        authData: FirebaseAuthData;
+
         firebase: Firebase;
+        sessionsRef: Firebase;
+        mySessionRef: FirebaseWithPromise<void>;
+
         constructor() {
-            FireBaseController.Instance = this;
-            this.firebase = new Firebase("https://glaring-torch-9586.firebaseio.com/");
+            FireBaseController.Instance = this;            
+            this.firebase       = new Firebase("https://glaring-torch-9586.firebaseio.com/");
         }
 
         facebookLogin(onOk, onError = null) {
-            
             this.firebase.authWithOAuthPopup("facebook", (error, authData) => {
                 if (!error) {
-                    this.userid = authData.facebook.id;
-                    this.userURL = authData.facebook.profileImageURL;
-                    var userNode = this.firebase.child("users").child(this.userid);
-                    userNode.set({ provider: authData.provider, name: authData.facebook.cachedUserProfile.first_name });
-                    FireBaseController.Instance.SessionPush();
+                    this.authData = authData;
+                    this.mySessionRef = this.firebase.child("sessions").push();
+                    this.mySessionRef.onDisconnect().remove();
+                    this.mySessionRef.update({ userID: this.authData.uid, userState: "OnLine" });
                     if (onOk != null) onOk();
                 }
                 else {
@@ -26,14 +28,6 @@ module YourTurn {
                     if (onError!=null) onError();
                 }
             }, { remember: "sessionOnly", scope: "user_likes" });
-        }
-
-        SessionPush() {
-            var sessionsRef = this.firebase.child("sessions");
-            var mySessionRef = sessionsRef.push();
-            mySessionRef.onDisconnect().remove();
-//            update({endedAt: Firebase.ServerValue.TIMESTAMP});
-            mySessionRef.update( { userState: "OnLine" } );
         }
 
         readWriteTest() {
@@ -45,7 +39,5 @@ module YourTurn {
                 console.log("The read failed: " + errorObject.code);
             });
         }
-
     }
-
 }

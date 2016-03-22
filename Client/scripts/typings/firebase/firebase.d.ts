@@ -328,21 +328,31 @@ declare module 'firebase' {
 
 // Reference: https://www.firebase.com/docs/web/api/firebase/getauth.html
 interface FirebaseAuthData {
-	uid: string;
-	provider: string;
-	token: string;
-	expires: number;
-	auth: Object;
-	google?: FirebaseAuthDataGoogle;
+    uid: string;
+    provider: string;
+    token: string;
+    expires: number;
+    auth: Object;
+    google?: FirebaseAuthDataGoogle;
+    facebook?: FirebaseAuthDataFacebook;
 }
 
 interface FirebaseAuthDataGoogle {
-	accessToken: string;
-	cachedUserProfile: FirebaseAuthDataGoogleCachedUserProfile;
-	displayName: string;
-	email?: string;
-	id: string;
-	profileImageURL: string;
+    accessToken: string;
+    cachedUserProfile: FirebaseAuthDataGoogleCachedUserProfile;
+    displayName: string;
+    email?: string;
+    id: string;
+    profileImageURL: string;
+}
+
+interface FirebaseAuthDataFacebook {
+    accessToken: string;
+    cachedUserProfile: FirebaseAuthDataFacebookCachedUserProfile;
+    displayName: string;
+    email?: string;
+    id: string;
+    profileImageURL: string;
 }
 
 interface FirebaseAuthDataGoogleCachedUserProfile {
@@ -355,6 +365,19 @@ interface FirebaseAuthDataGoogleCachedUserProfile {
 	name?: string;
 	picture?: string;
 }
+
+interface FirebaseAuthDataFacebookCachedUserProfile {
+    email?: string;
+    first_name?: string;
+    gender?: string;
+    last_name?: string;
+    id?: string;
+    link?: string;
+    timezone?: number;
+    name?: string;
+    //picture?: string;
+}
+
 
 interface FirebaseCredentials {
 	email: string;

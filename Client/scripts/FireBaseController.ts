@@ -11,7 +11,8 @@ module YourTurn {
 
         constructor() {
             FireBaseController.Instance = this;            
-            this.firebase       = new Firebase("https://glaring-torch-9586.firebaseio.com/");
+            this.firebase = new Firebase("https://glaring-torch-9586.firebaseio.com/");
+            this.readWriteTest();
         }
 
         facebookLogin(onOk, onError = null) {
@@ -31,8 +32,12 @@ module YourTurn {
         }
 
         readWriteTest() {
-            var dataRef = this.firebase.child("data");
-            dataRef.set({ texto: "Hola Mundo" });
+            var test: Array<number> = [1, 2, 3,4,5,6,7,8,9,10];
+            
+
+            var dataRef = this.firebase.child("sessions");
+            dataRef.set({ texto: "Hola Mundo", array: test });
+
             dataRef.on("value", function (snapshot) {
                 console.log(snapshot.val());
             }, function (errorObject) {

@@ -1,13 +1,11 @@
-﻿/// <reference path="typings/phaser/phaser.d.ts"/>
-/// <reference path='typings/firebase/firebase.d.ts'/>
-module YourTurn {
+﻿module YourTurn {
     export class EntryPoint extends Phaser.Game {
+        cordova: boolean;
+
         constructor() {
-            super(480, 800, Phaser.AUTO, 'content', { create: this.create });
-
+            this.cordova = typeof (<any>window).cordova !== 'undefined';
+            super(720, 1280, Phaser.AUTO, 'content', { preload: this.create });
             var ctrl = new FireBaseController();
-
-
             this.state.add("Boot", YourTurn.Boot);
             this.state.add("Game", YourTurn.Game);
         }
@@ -17,13 +15,13 @@ module YourTurn {
             this.scale.maxWidth = window.innerWidth * window.devicePixelRatio;
             this.scale.maxHeight = window.innerHeight * window.devicePixelRatio;
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-            //  Unless you specifically need to support multitouch I would recommend setting this to 1
             this.input.maxPointers = 1;
-            //  Phaser will automatically pause if the browser tab the game is in loses focus. 
-            // You can disable that here:
             this.stage.disableVisibilityChange = true;
 
-            FireBaseController.Instance.facebookLogin(() => { this.state.start("Boot", true, false); } );
+            if (this.cordova )
+                FireBaseController.Instance.facebookLogin(() => { this.state.start("Boot", true, false); });
+            else
+                this.state.start("Boot", true, false);
             
         }
     }

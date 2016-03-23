@@ -1,5 +1,5 @@
-﻿/// <reference path="../typings/phaser.d.ts"/>
-/// <reference path='../typings/firebase.d.ts'/>
+﻿/// <reference path="../typings/phaser/phaser.d.ts"/>
+/// <reference path='../typings/firebase/firebase.d.ts'/>
 
 module YourTurn {
     "use strict";

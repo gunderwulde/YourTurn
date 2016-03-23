@@ -37,11 +37,11 @@
     <TypeScriptCompile Include="..\Client\scripts\*.ts">
       <Link>scripts\%(FileName)%(Extension)</Link>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="scripts\typings\es6-promise.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\firebase.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\p2.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\phaser.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\pixi.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\cordova\es6-promise.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\firebase\firebase.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\phaser\p2.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\phaser\phaser.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\phaser\pixi.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="www\scripts\" />

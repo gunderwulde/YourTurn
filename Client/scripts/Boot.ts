@@ -1,9 +1,11 @@
-﻿
+﻿// 195 de aire por arriba. Calles 540 de alto 1280 - (195+540) = 545 para la zona de abajo.
+// Ancho de calles 132(fichas de 126x90 )x5 = 660 (720 -> 60 ).
+
 module YourTurn {
     export class Boot extends Phaser.State {
         preload() {
-            this.load.image('logo', 'images/phaser2.png');
-            this.load.spritesheet('numbers', 'images/sss.png', 64, 60, 64);
+            this.load.image('card', 'images/card.png');
+            this.load.spritesheet('numbers', 'images/numbers.png', 32, 29, 16*8);
 //            this.load.image('profilepic', FireBaseController.Instance.userURL);
         }
 
@@ -11,10 +13,12 @@ module YourTurn {
             //var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, align: "center", backgroundColor: "#ffff00" };
             //var text = this.game.add.text(0, 0, "Hola", style);
             //text.inputEnabled = true;
-            var logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'numbers', 0);
-            logo.inputEnabled = true;
-            logo.input.enableDrag();
-            logo.anchor.setTo(0.5, 0.5);
+            var logo = new Card(this.game, "1", "+2", "-3" );
+            logo.x = this.game.world.centerX;
+            logo.y = this.game.world.centerY;
+
+
+//            var logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'numbers', 0);
         }
     }
 

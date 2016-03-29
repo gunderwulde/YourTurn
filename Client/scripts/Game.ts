@@ -20,7 +20,6 @@
             else {
                 //  Same goes for mobile settings.
             }
-
             this.game.state.start("Game", true, false);
 
         }

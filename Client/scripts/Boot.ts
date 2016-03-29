@@ -17,9 +17,14 @@ module YourTurn {
             logo.x = this.game.world.centerX;
             logo.y = this.game.world.centerY;
 
-
+            this.game.time.advancedTiming = true;
 //            var logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'numbers', 0);
         }
+
+        render() {            
+            this.game.debug.text(this.game.time.fps.toString(), 2, 14, "#00ff00");
+        }
+
     }
 
 }

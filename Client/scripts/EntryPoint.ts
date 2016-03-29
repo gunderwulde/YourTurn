@@ -4,7 +4,7 @@
 
         constructor() {
             this.cordova = typeof (<any>window).cordova !== 'undefined';
-            super(720, 1280, Phaser.AUTO, 'content', { preload: this.create });
+            super(720, 1280, Phaser.CANVAS, 'content', { preload: this.create });
             var ctrl = new FireBaseController();
             this.state.add("Boot", YourTurn.Boot);
             this.state.add("Game", YourTurn.Game);

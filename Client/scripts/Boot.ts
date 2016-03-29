@@ -13,10 +13,37 @@ module YourTurn {
             //var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, align: "center", backgroundColor: "#ffff00" };
             //var text = this.game.add.text(0, 0, "Hola", style);
             //text.inputEnabled = true;
-            var logo = new Card(this.game, "1", "+2", "-3" );
-            logo.x = this.game.world.centerX;
-            logo.y = this.game.world.centerY;
 
+            for (var i = -1; i < 2; ++i) {
+
+                var logo = new Card(this.game, "1", "+2", "-3");
+                logo.x = this.game.world.centerX + i * 150;
+                logo.y = this.game.world.centerY;
+
+                logo = new Card(this.game, "2", "+3", "-4");
+                logo.x = this.game.world.centerX + i * 150;
+                logo.y = this.game.world.centerY - 120;
+
+                logo = new Card(this.game, "7", "+6", "-5");
+                logo.x = this.game.world.centerX + i * 150;
+                logo.y = this.game.world.centerY + 120;
+
+                logo = new Card(this.game, "2", "+3", "-4");
+                logo.x = this.game.world.centerX + i * 150;
+                logo.y = this.game.world.centerY - 240;
+
+                logo = new Card(this.game, "7", "+6", "-5");
+                logo.x = this.game.world.centerX + i * 150;
+                logo.y = this.game.world.centerY + 240;
+
+                logo = new Card(this.game, "2", "+3", "-4");
+                logo.x = this.game.world.centerX + i * 150;
+                logo.y = this.game.world.centerY - 360;
+
+                logo = new Card(this.game, "7", "+6", "-5");
+                logo.x = this.game.world.centerX + i * 150;
+                logo.y = this.game.world.centerY + 360;
+            }
             this.game.time.advancedTiming = true;
 //            var logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'numbers', 0);
         }

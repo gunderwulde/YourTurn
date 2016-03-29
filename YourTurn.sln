@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "YourTurn", "YourTurn.jsproj", "{F378DE88-FEBD-4CF8-AEF3-29093FD3AD8D}"
+Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "Client", "Client\Client.jsproj", "{F378DE88-FEBD-4CF8-AEF3-29093FD3AD8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientWeb", "..\ClientWeb\ClientWeb.csproj", "{5B437BE7-FB55-4C43-BFFB-1171B5CF52F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientWeb", "Client\ClientWeb.csproj", "{5B437BE7-FB55-4C43-BFFB-1171B5CF52F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

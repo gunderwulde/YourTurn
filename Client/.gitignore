@@ -1,3 +1,5 @@
 /platforms/
 /bin/
 /bld/
+/obj/
+/.vs/

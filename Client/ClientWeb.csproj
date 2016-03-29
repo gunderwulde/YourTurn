@@ -23,7 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="scripts\Boot.ts" />
-    <TypeScriptCompile Include="scripts\card.ts" />
+    <TypeScriptCompile Include="scripts\Card.ts" />
     <TypeScriptCompile Include="scripts\EntryPoint.ts" />
     <TypeScriptCompile Include="scripts\FireBaseController.ts" />
     <TypeScriptCompile Include="scripts\Game.ts" />

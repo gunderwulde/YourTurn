@@ -13,7 +13,6 @@ module YourTurn {
             //var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, align: "center", backgroundColor: "#ffff00" };
             //var text = this.game.add.text(0, 0, "Hola", style);
             //text.inputEnabled = true;
-
             for (var i = -1; i < 2; ++i) {
 
                 var logo = new Card(this.game, "1", "+2", "-3");

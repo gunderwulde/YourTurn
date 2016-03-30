@@ -18,7 +18,12 @@
             this.input.maxPointers = 1;
             this.stage.disableVisibilityChange = true;
 
-            FireBaseController.Instance.facebookLogin(() => { this.state.start("Boot", true, false); });
+            FireBaseController.Instance.facebookLogin(() => {
+                WSController.Start(); // Start call!
+                this.state.start("Boot", true, false);
+            }, () => {
+                alert("Error!!");
+            });
             /*
             if (this.cordova )
                 FireBaseController.Instance.facebookLogin(() => { this.state.start("Boot", true, false); });

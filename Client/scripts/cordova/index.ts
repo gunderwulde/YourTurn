@@ -6,7 +6,6 @@ module YourTurn {
     "use strict";
 
     export module Application {
-
         export function initialize() {
             document.addEventListener('deviceready', onDeviceReady, false);
         }

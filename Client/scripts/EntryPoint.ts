@@ -15,6 +15,7 @@
             this.scale.maxWidth = window.innerWidth * window.devicePixelRatio;
             this.scale.maxHeight = window.innerHeight * window.devicePixelRatio;
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+//            this.scale.aspectRatio = 720 / 1280;
             this.input.maxPointers = 1;
             this.stage.disableVisibilityChange = true;
 

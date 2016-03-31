@@ -4,7 +4,9 @@
 
 module YourTurn {
     "use strict";
-    window.onload = function () {
-        var game = new EntryPoint();
+    if (typeof cordova === 'undefined') {
+        window.onload = function () {
+            var game = new EntryPoint();
+        }
     }
 }

@@ -12,7 +12,7 @@ module YourTurn {
         constructor() {
             FireBaseController.Instance = this;            
             this.firebase = new Firebase("https://glaring-torch-9586.firebaseio.com/");
-            this.readWriteTest();
+//            this.readWriteTest();
         }
 
         facebookLogin(onOk, onError = null) {
@@ -30,7 +30,7 @@ module YourTurn {
                 }
             }, { remember: "sessionOnly", scope: "user_likes" });
         }
-
+        /*
         readWriteTest() {
             var test: Array<number> = [1, 2, 3,4,5,6,7,8,9,10];
             
@@ -40,6 +40,14 @@ module YourTurn {
 
             dataRef.on("value", function (snapshot) {
                 console.log(snapshot.val());
+            }, function (errorObject) {
+                console.log("The read failed: " + errorObject.code);
+            });
+        }
+        */
+        subscribeToActions(matchid: string, onAction: any) {
+            this.firebase.child("actions").child(matchid).child("USERID").on("child_added", function (snapshot) {
+                onAction( Number(snapshot.key()), snapshot.val());
             }, function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
             });

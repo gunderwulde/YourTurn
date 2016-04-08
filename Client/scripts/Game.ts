@@ -1,27 +1,27 @@
-﻿module YourTurn {
+﻿// 195 de aire por arriba. Calles 540 de alto 1280 - (195+540) = 545 para la zona de abajo.
+// Ancho de calles 132(fichas de 126x90 )x5 = 660 (720 -> 60 ).
+
+module YourTurn {
     export class Game extends Phaser.State {
+        table: Table;
 
         preload() {
-            this.load.image('preloadBar', 'assets/loader.png');
+            Card.Preload(this);
+            Line.Preload(this);
         }
 
         create() {
- 
-            //  Unless you specifically need to support multitouch I would recommend setting this to 1
-            this.input.maxPointers = 1;
- 
-            //  Phaser will automatically pause if the browser tab the game is in loses focus. You can disable that here:
-            this.stage.disableVisibilityChange = true;
-
-            if (this.game.device.desktop) {
-                //  If you have any desktop specific settings, they can go in here
-                //               this.stage.scale.pageAlignHorizontally = true;
-            }
-            else {
-                //  Same goes for mobile settings.
-            }
-            this.game.state.start("Game", true, false);
-
+            this.game.time.advancedTiming = true;
+            this.table = new Table("MATCHID", this.game);
         }
+
+        update() {
+            this.table.Update();
+        }
+
+        render() {
+            this.game.debug.text(this.game.time.fps.toString(), 2, 14, "#00ff00");
+        }
+
     }
 }

@@ -27,9 +27,10 @@ module YourTurn {
 
         Process(action: string) {
             var params = action.split(':');
-            var player = params[0] == "P1" ? this.table.player1 : this.table.player2;
+            var player = params[0] == Table.myID ? this.table.player1 : this.table.player2;
             switch (params[1]) {
                 case "DRW": this.DrawAction(params, player); break;
+                case "TRN": this.Turn(player); break;
                 default: console.log(">>> action " + params[0] + " " + params[1]); break;
             }
         }
@@ -37,9 +38,15 @@ module YourTurn {
         //P1:DRW:12:1:1:1
         DrawAction(params: Array<string>, player: Player) {
             var card: Card = new Card(this.table.game, params[2]);
+            card.x = this.table.game.width + 130;
+            card.y = player.handy;
             player.PutCardOnHand(card);
-            if (params.length>3)
-                card.Show(params[3], params[4], params[5]);            
+            if (params.length > 3) card.Show(params[3], params[4], params[5]);
+        }
+        //P1:TRN
+        Turn(player: Player) {
+            // Give turn to player.
+            player.Turn();
         }
     }
 }

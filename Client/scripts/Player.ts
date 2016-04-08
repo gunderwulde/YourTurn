@@ -3,41 +3,71 @@
 
 module YourTurn {
     export class Player{
+        table: Table;
+
+        // Lineas de juego.
+        lines: Array<Line> = [];
 
         other: Player;
 
+        handy: number;
         hand: Array<Card> = [];
-        table: Table;
-        lines: Array<Card>;
-        constructor(table: Table) {
+
+        live: number = 20;
+        mana: number = 1;
+
+        constructor(table: Table, down: boolean) {
             this.table = table;
-            this.lines = [null, null, null, null, null];
+            if (down) this.handy = table.game.height * 0.8;
+            else this.handy = table.game.height * 0.2;
+            var y = table.game.height * 0.5 - (down ? 0 : 270);
+            for (var i = 0; i < 5; ++i)
+                this.lines.push(new Line(table.game, i, y, down));
         }
 
         PutCardOnHand(card: Card) {
             // Mira si sale de la mesa.
-            this.RemoveFrom(card.id, this.lines);
+            // this.RemoveFrom(card.id, this.lines);
             this.hand.push(card);
+            /// Mandar la carta a la mano.
+            this.SortHand();
         }
 
-        PutCardOnTable(card: Card, line: number): boolean {
-            // Mira si sale de la mano.
-            this.RemoveFrom(card.id, this.hand);
-
-            if (this.lines[line] != null) return false;
-            this.lines[line] = card;
-
-            return true;
-        }
-
-        RemoveFrom(id: number, array: Array<Card>) {
-            for (var i = 0; i < array.length; ++i) {
-                if (array[i]!=null && array[i].id == id) {
-                    array.splice(id, 1);
+        RemoveFromHand(id: number) {
+            for (var i = 0; i < this.hand.length; ++i) {
+                if (this.hand[i] != null && this.hand[i].id == id) {
+                    this.hand.splice(id, 1);
                     return;
                 }
             }
         }
+
+        SortHand() {
+            // 130 de ancho.
+            var init = (this.table.game.width - (this.hand.length - 1) * Card.cardSize) * 0.5;
+            for (var i = 0; i < this.hand.length; ++i) {
+                this.hand[i].target.set( init, this.handy );
+                init += Card.cardSize;
+            }
+        }
+
+        PutCardOnTable(card: Card, line: number, order:number): boolean {
+            // Mira si sale de la mano.
+            this.RemoveFromHand(card.id);
+
+//            if (this.lines[line][order] != null) return false;
+            this.lines[line].SetCard(card);
+
+            return true;
+        }
+
+        Turn() {
+            for (var i = 0; i < this.hand.length; ++i)
+                if ( this.hand[i].mana <= this.mana)
+                    this.hand[i].SetActive(true);
+
+        }
+
     
     }
 

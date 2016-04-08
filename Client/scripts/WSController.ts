@@ -1,19 +1,19 @@
 ﻿
 module YourTurn {
     export class WSController {
-
+        static url: string = "http://13.95.148.159/";
         static Start() {
-            $.ajax({ url: "http://13.95.148.159/barajar.php?uid=" + FireBaseController.Instance.authData.uid, type: "GET", dataType: 'jsonp', contentType: "application/json" })
-                .done((data, status) => {
+            $.ajax({ url: WSController.url + "barajar.php?uid=" + FireBaseController.Instance.authData.uid, type: "GET", dataType: 'jsonp', contentType: "application/json" })
+                .done((data, status) =>  {
                     console.log(">>> " + data.status);
                 })
                 .fail(() => { });
         }
 
-        static Play(cardid:number, slot:number) {
+        static Play(cardid:number, line:number, slot:number) {
         }
 
-        static EndTrun() {
+        static EndTurn() {
         }
     }
 }

@@ -29,24 +29,38 @@ module YourTurn {
             var params = action.split(':');
             var player = params[0] == Table.myID ? this.table.player1 : this.table.player2;
             switch (params[1]) {
-                case "DRW": this.DrawAction(params, player); break;
+                case "DRW": this.DrawAction(player, params); break;
                 case "TRN": this.Turn(player); break;
+                case "PLY": this.Play(player, params); break;
                 default: console.log(">>> action " + params[0] + " " + params[1]); break;
             }
         }
 
         //P1:DRW:12:1:1:1
-        DrawAction(params: Array<string>, player: Player) {
+        DrawAction(player: Player, params: Array<string>) {
             var card: Card = new Card(this.table.game, params[2]);
             card.x = this.table.game.width + 130;
             card.y = player.handy;
             player.PutCardOnHand(card);
             if (params.length > 3) card.Show(params[3], params[4], params[5]);
         }
+
         //P1:TRN
         Turn(player: Player) {
             // Give turn to player.
             player.Turn();
+        }
+
+        //P1:PLY:12:0:0:1:1:1
+        Play(player: Player, params: Array<string>) {
+            console.log(">>> Play " );
+            // Play card.
+            var player = params[0] == Table.myID ? this.table.player1 : this.table.player2;
+            var card = player.RemoveFromHand(Number(params[2]));
+            // If there are data for the card, set it.
+            if (params.length > 5) card.Show(params[5], params[6], params[7]);
+            // Send card to line params[3], slot params[4]
+            player.PutCardOnTable(card, Number(params[3]), Number(params[4]));            
         }
     }
 }

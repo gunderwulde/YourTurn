@@ -33,13 +33,13 @@ module YourTurn {
             this.SortHand();
         }
 
-        RemoveFromHand(id: number) {
+        RemoveFromHand(id: number): Card {
             for (var i = 0; i < this.hand.length; ++i) {
                 if (this.hand[i] != null && this.hand[i].id == id) {
-                    this.hand.splice(id, 1);
-                    return;
+                    return this.hand.splice(i, 1)[0];
                 }
             }
+            return null;
         }
 
         SortHand() {
@@ -51,14 +51,8 @@ module YourTurn {
             }
         }
 
-        PutCardOnTable(card: Card, line: number, order:number): boolean {
-            // Mira si sale de la mano.
-            this.RemoveFromHand(card.id);
-
-//            if (this.lines[line][order] != null) return false;
-            this.lines[line].SetCard(card);
-
-            return true;
+        PutCardOnTable(card: Card, line: number, order: number) {
+            this.lines[line].SetCard(card,order);
         }
 
         Turn() {

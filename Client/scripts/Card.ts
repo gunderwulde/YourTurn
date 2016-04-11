@@ -36,12 +36,16 @@ module YourTurn {
     export class Card extends Phaser.Sprite {
         static cardSize: number = 130;
         static current: Card;
+        static response: Card;
+
+        point : Phaser.Point;
 
         id: number;
 
         mana: number;
         attack: string;
         life: string;
+        active: boolean;
 
         sprMana: Phaser.Sprite;
         sprAttack: Phaser.Sprite;
@@ -57,16 +61,18 @@ module YourTurn {
             super(game, 0, 0, 'card');
             this.anchor.setTo(0.5, 0.5);
             this.id = Number(id);
-            this.events.onDragStart.add(() => { Card.current = this; }, this);
+            this.events.onDragStart.add( () => {
+                Card.current = this;
+            }, this);
             this.events.onDragStop.add(() => {
-
-                Card.current.target.go();
-
-                if (Line.current != null) { // mandar jugada!!!!                    
-                    WSController.Play(Card.current.id, Line.current.id, 0);
-                    //Table.instance.player1.PutCardOnTable(Card.current, Line.current.id, 0);
-                }
+                if (Line.current != null) {
+                    Card.response = Card.current;
+                    this.point = new Phaser.Point(Card.response.x, Card.response.y);
+                    WSController.Play(Card.response.id, Line.current.id, 0);
+                } else
+                    Card.current.target.go();
                 Card.current = null;
+                    
             }, this);
             game.add.existing(this);
         }
@@ -92,8 +98,24 @@ module YourTurn {
             }
         }
 
-        update() {            
+        update() {
             super.update();
+            if (this == Card.response) {
+                this.WaitingResponse();
+            } 
+
+            if (this.active) {
+                if (Card.response != null && this.inputEnabled) {
+                    this.input.disableDrag();
+                    this.inputEnabled = false;
+                }
+                else
+                    if (Card.response == null && !this.inputEnabled) {
+                        this.inputEnabled = true;
+                        this.input.enableDrag();
+                    }
+            }
+
             this.target.update(this);
         }
 
@@ -107,10 +129,14 @@ module YourTurn {
             return num;
         }
 
-        SetActive(value: boolean) {
-            this.inputEnabled = true;
-            if (value) this.input.enableDrag();
-            else this.input.disableDrag();
+        SetActive(value: boolean) { this.active = value; }
+        WaitingResponse() {
+            var ang = this.game.time.time / 250.0;
+            var sd = 32;
+            var ca = Math.cos(ang) * sd;
+            var sa = Math.sin(ang) * sd;
+            this.x += (this.point.x + ca - sa - this.x) * 0.1;
+            this.y += (this.point.y + sa + ca - this.y) * 0.1;
         }
     }
 }

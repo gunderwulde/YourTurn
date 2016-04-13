@@ -18,6 +18,7 @@ module YourTurn {
         facebookLogin(onOk, onError = null) {
             this.firebase.authWithOAuthPopup("facebook", (error, authData) => {
                 if (!error) {
+                    authData.uid = authData.uid.replace(":", "_");
                     this.authData = authData;
                     this.mySessionRef = this.firebase.child("sessions").push();
                     this.mySessionRef.onDisconnect().remove();

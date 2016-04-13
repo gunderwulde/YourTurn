@@ -10,6 +10,16 @@ module YourTurn {
                 .fail(() => { });
         }
 
+        static CreateMatch() {
+            $.ajax({
+                url: WSController.url + "crear_partida.php?uid1=" + FireBaseController.Instance.authData.uid + "&uid2=PY2",
+                type: "GET", dataType: 'jsonp', contentType: "application/json"
+            }).done((data, status) => {
+                console.log(">>> " + data.name);
+            }).fail(() => { });
+            
+        }
+
         static Play(cardid:number, line:number, slot:number) {
         }
 

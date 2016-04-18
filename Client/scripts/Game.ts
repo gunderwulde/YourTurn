@@ -12,7 +12,12 @@ module YourTurn {
 
         create() {
             this.game.time.advancedTiming = true;
-            this.table = new Table("MATCHID", this.game);
+            this.table = new Table(this.game);
+            WSController.CreateMatch(() => {
+                this.table.SubscribeToActions();
+                WSController.Jugada(5, "P1:DRW:12:1:1:1");
+            });
+            
         }
 
         update() {

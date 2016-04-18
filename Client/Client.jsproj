@@ -77,7 +77,8 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <TypeScriptCompileOnSaveEnabled>true</TypeScriptCompileOnSaveEnabled>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\ApacheCordovaTools\vs-mda-targets\Microsoft.TypeScript.MDA.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\ApacheCordovaTools\vs-mda-targets\Microsoft.MDA.FileMirroring.targets" />

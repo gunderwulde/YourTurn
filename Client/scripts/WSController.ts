@@ -10,17 +10,31 @@ module YourTurn {
                 .fail(() => { });
         }
 
-        static CreateMatch() {
+        static CreateMatch(OnOk, OnError=null) {
             $.ajax({
                 url: WSController.url + "crear_partida.php?uid1=" + FireBaseController.Instance.authData.uid + "&uid2=PY2",
                 type: "GET", dataType: 'jsonp', contentType: "application/json"
             }).done((data, status) => {
-                console.log(">>> " + data.name);
-            }).fail(() => { });
+                FireBaseController.Instance.matchID = data.name;
+                if (OnOk != null) OnOk();
+                }).fail(() => {
+                    if (OnError != null) OnError();
+                });
             
         }
 
-        static Play(cardid:number, line:number, slot:number) {
+
+        static Jugada(time: number, value: string) {
+            console.log(">>>> Add jugada " + FireBaseController.Instance.matchID);
+            $.ajax({
+                url: WSController.url + "jugada.php?token=" + FireBaseController.Instance.authData.uid + "&match=" + FireBaseController.Instance.matchID + "&k=" + time + "&v=" + value,
+                type: "GET", dataType: 'jsonp', contentType: "application/json"
+            }).done((data, status) => {
+                console.log(">>> " + data);
+            }).fail(() => { });
+        }
+
+        static Play(cardid: number, line: number, slot: number) {
         }
 
         static EndTurn() {

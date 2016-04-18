@@ -15,11 +15,10 @@
                     this.stage.disableVisibilityChange = true;
         
                     FireBaseController.Instance.facebookLogin(() => {
-                        WSController.Start(); // Start call!
-                        WSController.CreateMatch();                        
+                       // WSController.Start(); // Start call!
                         this.state.start("Boot", true, false);
                     }, () => {
-                        alert("Error!!");
+                        alert("Error on facebook login!!");
                     });        
                     //this.state.start("Boot", true, false);
                 }

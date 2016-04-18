@@ -13,7 +13,7 @@ module YourTurn {
         player1: Player;
         player2: Player;
 
-        constructor(matchid: string, game: Phaser.Game) {
+        constructor(game: Phaser.Game) {
             Table.instance = this;
             this.game = game;
             this.actions = new Actions(this);
@@ -24,10 +24,17 @@ module YourTurn {
             this.player1.other = this.player2;
             this.player2.other = this.player1;
 
-            FireBaseController.Instance.subscribeToActions(matchid, (time: number, action: string) => {
+        }
+
+
+        SubscribeToActions() {
+            FireBaseController.Instance.subscribeToActions((time: number, action: string) => {
+                console.log("ACT!" + time + " >>>> " + action);
                 this.actions.Push(time * 100 + this.game.time.now, action);
             });
+
         }
+
 
         Update() {
             this.actions.Update();

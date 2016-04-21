@@ -112,4 +112,12 @@
   <plugin name="cordova-plugin-whitelist" version="1.2.1" />
   <preference name="Fullscreen" value="True" />
   <preference name="Orientation" value="portrait" />
+  <preference name="android-installLocation" value="auto" />
+  <preference name="android-maxSdkVersion" value="19" />
+  <preference name="android-targetSdkVersion" value="19" />
+  <plugin name="cordova-custom-config" version="2.0.0" src="https://github.com/dpa99c/cordova-custom-config" />
+  <platform name="android">
+    <preference name="android-manifest/@android:installLocation" value="auto" />
+  </platform>
+  <preference name="android-minSdkVersion" value="14" />
 </widget>

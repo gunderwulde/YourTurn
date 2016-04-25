@@ -17,17 +17,17 @@
         //            this.scale.aspectRatio = 720 / 1280;
                     this.input.maxPointers = 1;
                     this.stage.disableVisibilityChange = true;
-        
-                    FireBaseController.Instance.facebookLogin(() => {
-                       // WSController.Start(); // Start call!
-                        this.state.start("Boot", true, false);
+
+                    var ctrl = new FireBaseController();
+                    FireBaseController.Instance.facebookLogin(() => {                       
+                        FireBaseController.Instance.subscribeToGameStart(() => { this.state.start("Boot", true, false); })
+                        WSController.WannaPlay( FireBaseController.Instance.mySessionRef.key());
                     }, () => {
                         alert("Error on facebook login!!");
-                    });        
+                    });
                     //this.state.start("Boot", true, false);
                 }
             });
-            var ctrl = new FireBaseController();
 
             this.state.add("Boot", YourTurn.Boot);
             this.state.add("Game", YourTurn.Game);

@@ -15,7 +15,7 @@ module YourTurn {
                 url: WSController.url + "crear_partida.php?uid1=" + FireBaseController.Instance.authData.uid + "&uid2=PY2",
                 type: "GET", dataType: 'jsonp', contentType: "application/json"
             }).done((data, status) => {
-                FireBaseController.Instance.matchID = data.name;
+                FireBaseController.Instance.matchID = data.matchID;
                 if (OnOk != null) OnOk();
                 }).fail(() => {
                     if (OnError != null) OnError();
@@ -38,6 +38,25 @@ module YourTurn {
         }
 
         static EndTurn() {
+        }
+
+
+        static googleUrl: string = "https://script.google.com/macros/s/AKfycbyffbjkSf-Zee8LY6vwVaUkc5Ifts7Tuqmh5LWo5mRY/dev";
+
+        static WannaPlay(session:string) {
+            $.ajax({
+                url: WSController.googleUrl,
+                type: "GET",
+                data: { command: "wplay", session: session },
+                dataType: 'jsonp',
+                crossDomain: true,
+                contentType: "application/json"
+            }).done((data, status) => {
+                console.log(">>> DONE " + status + " " + data.res);
+            }).fail((data) => {
+                console.log(">>> FAIL " + data.res );
+            });
+            
         }
     }
 }

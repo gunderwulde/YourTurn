@@ -19,8 +19,11 @@
                     this.stage.disableVisibilityChange = true;
 
                     var ctrl = new FireBaseController();
-                    FireBaseController.Instance.facebookLogin(() => {                       
-                        FireBaseController.Instance.subscribeToGameStart(() => { this.state.start("Boot", true, false); })
+                    FireBaseController.Instance.facebookLogin(() => {
+                        // Pone en modo Jugar.
+                        FireBaseController.Instance.subscribeToGameStart(() => {
+                            this.state.start("Boot", true, false);
+                        })
                         WSController.WannaPlay( FireBaseController.Instance.mySessionRef.key());
                     }, () => {
                         alert("Error on facebook login!!");

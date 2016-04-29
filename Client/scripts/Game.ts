@@ -13,11 +13,13 @@ module YourTurn {
         create() {
             this.game.time.advancedTiming = true;
             this.table = new Table(this.game);
+            this.table.SubscribeToActions();
+            /*
             WSController.CreateMatch(() => {
                 this.table.SubscribeToActions();
                 WSController.Jugada(5, "P1:DRW:12:1:1:1");
             });
-            
+            */
         }
 
         update() {

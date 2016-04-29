@@ -35,7 +35,7 @@ module YourTurn {
         }
 
         subscribeToActions(onAction: any) {
-            this.firebase.child("actions").child(FireBaseController.Instance.matchID+"/"+FireBaseController.Instance.authData.uid).on("child_added", function (snapshot) {
+            this.firebase.child("actions").child(FireBaseController.Instance.matchID + "/" + this.mySessionRef.key()).on("child_added", function (snapshot) {
                 onAction( Number(snapshot.key()), snapshot.val());
             }, function (errorObject) {
                 console.log("The read failed: " + errorObject.code);

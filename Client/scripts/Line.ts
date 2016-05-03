@@ -63,5 +63,12 @@ module YourTurn {
             else this.cards.push(card);
             card.target.set(this.x + 65, this.slots[order]);
         }
+
+        GetCardByUID(uid: number): Card {
+            for (var v of this.cards)
+                if (v.uid == uid)
+                    return v;
+            return null;
+        }
     }
 }

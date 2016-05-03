@@ -6,6 +6,9 @@ module YourTurn {
         table: Table;
 
         preload() {
+            this.game.load.spritesheet('button', 'images/button_turn.png', 193, 71);
+            
+
             Card.Preload(this);
             Line.Preload(this);
         }
@@ -14,14 +17,7 @@ module YourTurn {
             this.game.time.advancedTiming = true;
             this.table = new Table(this.game);
             this.table.SubscribeToActions();
-            /*
-            WSController.CreateMatch(() => {
-                this.table.SubscribeToActions();
-                WSController.Jugada(5, "P1:DRW:12:1:1:1");
-            });
-            */
         }
-
         update() {
             this.table.Update();
         }

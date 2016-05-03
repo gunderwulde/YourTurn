@@ -40,16 +40,17 @@ module YourTurn {
 
         point : Phaser.Point;
 
+        uid: number;
         id: number;
 
         mana: number;
         attack: string;
-        life: string;
+        myHealth: string;
         active: boolean;
 
         sprMana: Phaser.Sprite;
         sprAttack: Phaser.Sprite;
-        sprLife: Phaser.Sprite;
+        sprHealth: Phaser.Sprite;
         target: Target = new Target();
 
         static Preload(state: Phaser.State) {
@@ -57,10 +58,10 @@ module YourTurn {
             state.load.spritesheet('numbers', 'images/numbers.png', 32, 29, 16 * 8);
         }
 
-        constructor(game: Phaser.Game, id: string) {
+        constructor(game: Phaser.Game, uid: string) {
             super(game, 0, 0, 'card');
             this.anchor.setTo(0.5, 0.5);
-            this.id = Number(id);
+            this.uid = Number(uid);
             this.events.onDragStart.add( () => {
                 Card.current = this;
             }, this);
@@ -68,7 +69,7 @@ module YourTurn {
                 if (Line.current != null) {
                     Card.response = Card.current;
                     this.point = new Phaser.Point(Card.response.x, Card.response.y);
-                    WSController.Play(Card.response.id, Line.current.id, 0);
+                    WSController.Play(Card.response.uid, Line.current.id, 0);
                 } else
                     Card.current.target.go();
                 Card.current = null;
@@ -77,24 +78,32 @@ module YourTurn {
             game.add.existing(this);
         }
 
-        Show(mana: string = "", attack: string = "", life: string = "") { 
+        Show(id: string = "", mana: string = "", health: string = "", attack: string = "") { 
+            if (id != "") {
+                this.id = Number(id);
+                // Poner imagen
+            }
             if (mana != "") {
                 this.mana = Number( mana );
                 this.sprMana = new Phaser.Sprite(this.game, 47, -35, 'numbers', 64 + this.GetSprite(mana));
                 this.sprMana.anchor.setTo(0.5, 0.5);
                 this.addChild(this.sprMana);
             }
-            if (attack != "") {
+            if (attack != "" && this.attack != attack) {
+                console.log("Modify Attack from " + this.attack + " to " + attack)
                 this.attack = attack;
+                if (this.sprAttack != null) this.sprAttack.kill();
                 this.sprAttack = new Phaser.Sprite(this.game, 15, 35, 'numbers', this.GetSprite(attack));
                 this.sprAttack.anchor.setTo(0.5, 0.5);
                 this.addChild(this.sprAttack);
             }
-            if (life != "") {
-                this.life = life;
-                this.sprLife = new Phaser.Sprite(this.game, 47, 35, 'numbers', 32 + this.GetSprite(life));
-                this.sprLife.anchor.setTo(0.5, 0.5);
-                this.addChild(this.sprLife);
+            if (health != "" && this.myHealth != health) {
+                console.log("Modify Health from " + this.myHealth + " to " + health)
+                this.myHealth = health;
+                if (this.sprHealth != null) this.sprHealth.kill();
+                this.sprHealth = new Phaser.Sprite(this.game, 47, 35, 'numbers', 32 + this.GetSprite(health));
+                this.sprHealth.anchor.setTo(0.5, 0.5);
+                this.addChild(this.sprHealth);
             }
         }
 
@@ -126,7 +135,7 @@ module YourTurn {
                 if (val[0] == "-") num += 10 + Number(val[1]);
                 else num += 19 + Number(val[0]);
 
-            return num;
+            return num-1;
         }
 
         SetActive(value: boolean) { this.active = value; }

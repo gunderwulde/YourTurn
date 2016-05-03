@@ -38,7 +38,8 @@ module YourTurn {
         static current: Card;
         static response: Card;
 
-        point : Phaser.Point;
+        point: Phaser.Point;
+        player: Player;
 
         uid: number;
         id: number;
@@ -58,11 +59,16 @@ module YourTurn {
             state.load.spritesheet('numbers', 'images/numbers.png', 32, 29, 16 * 8);
         }
 
-        constructor(game: Phaser.Game, uid: string) {
-            super(game, 0, 0, 'card');
+        constructor(player: Player, uid: string) {
+            super(player.table.game, 0, 0, 'card');
             this.anchor.setTo(0.5, 0.5);
             this.uid = Number(uid);
-            this.events.onDragStart.add( () => {
+            this.player = player;
+            this.events.onDragStart.add(() => {
+                if (this.mana <= this.player.mana)
+                    this.input.draggable = true;
+                else
+                    this.input.draggable = false;
                 Card.current = this;
             }, this);
             this.events.onDragStop.add(() => {
@@ -75,7 +81,7 @@ module YourTurn {
                 Card.current = null;
                     
             }, this);
-            game.add.existing(this);
+            player.table.game.add.existing(this);
         }
 
         Show(id: string = "", mana: string = "", health: string = "", attack: string = "") { 

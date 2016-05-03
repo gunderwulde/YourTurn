@@ -44,7 +44,7 @@ module YourTurn {
 
         //P1:DRW:UID[:ID:MANA:HEALTH:ATTACK]
         DrawAction(player: Player, params: Array<string>) {
-            var card: Card = new Card(this.table.game, params[2]);
+            var card: Card = new Card(player, params[2]);
             card.x = this.table.game.width + 130;
             card.y = player.handy;
             player.PutCardOnHand(card);

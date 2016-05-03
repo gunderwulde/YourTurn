@@ -17,8 +17,8 @@ module YourTurn {
         button: Phaser.Button;
 
         constructor(game: Phaser.Game) {
-            Table.instance = this;
             this.game = game;
+            Table.instance = this;
             this.actions = new Actions(this);
 
             this.button = this.game.add.button(this.game.world.centerX - 95, this.game.world.height - 100, 'button', this.ActionOnClick, this, 2, 1, 0);

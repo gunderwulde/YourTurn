@@ -4,10 +4,14 @@
 
         constructor() {
             super(720, 1280, Phaser.CANVAS, 'content', {
-                create: ()=>{
+                create: () => {
+
+                    console.log("INIT  !!!!");
+
                     this.cordova = typeof (<any>window).cordova !== 'undefined';
                     //  This sets a limit on the up-scale
-
+                    if (this.cordova)
+                        WSController.googleUrl = "https://script.google.com/macros/s/AKfycbwdL24yiQDx8fjphs9dZOe1naGA0B_AEf84uoAhYJ_VVXTQrcF8/exec";
 
                     this.scale.maxWidth = window.innerWidth * window.devicePixelRatio;
                     this.scale.maxHeight = window.innerHeight * window.devicePixelRatio;

@@ -15,8 +15,8 @@ module YourTurn {
                 contentType: "application/json"
             }).done((data, status) => {
                 console.log(">>> DONE " + status + " " + data.res);
-            }).fail((data) => {
-                console.log(">>> FAIL " + data.res );
+                }).fail((jqXHR, textStatus, errorThrown) => {
+                    console.log(">>> FAIL [" + jqXHR + "] [" + textStatus + "] [" + errorThrown+"]" );
             });
         }
 
@@ -30,8 +30,8 @@ module YourTurn {
                 contentType: "application/json"
             }).done((data, status) => {
                 console.log(">>> DONE " + status + " " + data.res);
-            }).fail((data) => {
-                console.log(">>> FAIL " + data.res);
+            }).fail((jqXHR, textStatus, errorThrown) => {
+                console.log(">>> FAIL [" + jqXHR + "] [" + textStatus + "] [" + errorThrown + "]");
                 Card.response = null;
             });
         }
@@ -46,8 +46,8 @@ module YourTurn {
                 contentType: "application/json"
             }).done((data, status) => {
                 console.log(">>> DONE " + status + " " + data.res);
-            }).fail((data) => {
-                console.log(">>> FAIL " + data.res);
+            }).fail((jqXHR, textStatus, errorThrown) => {
+                console.log(">>> FAIL [" + jqXHR + "] [" + textStatus + "] [" + errorThrown + "]");
                 Card.response = null;
             });
         }

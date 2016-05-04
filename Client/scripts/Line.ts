@@ -38,11 +38,10 @@ module YourTurn {
                     this.alpha = 0.3;
                     Line.current = null;
                 }
-                */
+                */                
                 return;
             }
-
-            if (Phaser.Rectangle.containsPoint(this.rect, this.game.input.mousePointer.position)) {
+            if (Phaser.Rectangle.containsPoint(this.rect, this.game.input.activePointer.position)) {
                 this.alpha = 1;
                 Line.current = this;
             }
@@ -54,7 +53,6 @@ module YourTurn {
         }
 
         SetCard(card: Card, order: number): boolean {
-            card.SetActive(false);
             if (this.cards.length >= 2) return false;
             if (order == 0) {
                 if (this.cards.length == 1) this.cards[0].target.set(this.x + 65, this.slots[order + 1]);

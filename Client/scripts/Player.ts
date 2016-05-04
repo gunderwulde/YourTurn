@@ -80,9 +80,7 @@ module YourTurn {
 
         Turn() {
             for (var i = 0; i < this.hand.length; ++i)
-                // if (this.hand[i].mana <= this.mana)
-                    this.hand[i].SetActive(true);
-
+                this.hand[i].input.draggable = true;
         }
 
         SetMana(value) {

@@ -5,7 +5,8 @@
   </description>
   <author href="http://cordova.io" email="dev@cordova.apache.org">UnKnot</author>
   <content src="index.html" />
-  <access origin="*" />
+  <access origin="http://*" />
+  <access origin="https://*" />
   <vs:features />
   <preference name="SplashScreen" value="screen" />
   <preference name="windows-target-version" value="8.1" />
@@ -18,6 +19,8 @@
   <allow-intent href="geo:*" />
   <allow-intent href="*.firebaseio.com" />
   <allow-intent href="auth.firebase.com" />
+  <allow-intent href="script.google.com" />
+  <allow-intent href="script.googleusercontent.com" />
   <platform name="android">
     <allow-intent href="market:*" />
   </platform>

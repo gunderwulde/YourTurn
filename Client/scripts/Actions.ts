@@ -54,13 +54,13 @@ module YourTurn {
         //P1:TRN
         Turn(player: Player) {
             // Give turn to player.
-            this.table.button.visible = true;
+            player.table.OnStartTurn();
             player.Turn();
         }
 
         //P1:PLY:UID:LINE:SLOT[:ID:MANA:HEALTH:ATTACK]
-        Play(player: Player, params: Array<string>) {
-            Card.response = null;
+        Play(player: Player, params: Array<string>) {            
+            player.table.OnPlayedCard();
             // Play card.
             // var player = params[0] == this.table.myID ? this.table.player1 : this.table.player2;
             var card = player.RemoveFromHand(Number(params[2]));
@@ -78,7 +78,9 @@ module YourTurn {
         Attack(player: Player, params: Array<string>) {
             var card = player.GetCardByUID(Number(params[2]));
             if (card != null) {
-                console.log(">>> ATTACK!!! " );
+                console.log(">>> ATTACK!!! ");
+            } else {
+                console.log(">>> ERROR EN ATTACK!!! ");
             }
         }
         //P1:DMG:UID[:HEALTH:ATTACK]
@@ -90,6 +92,8 @@ module YourTurn {
         Kill(player: Player, params: Array<string>) {
             var card = player.GetCardByUID(Number(params[2]));
             if (card != null) card.kill();
+            else console.log(">>> ERROR EN DEF!!! ");
+
         }
     }
 }

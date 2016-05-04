@@ -47,7 +47,6 @@ module YourTurn {
         mana: number;
         attack: string;
         myHealth: string;
-        active: boolean;
 
         sprMana: Phaser.Sprite;
         sprAttack: Phaser.Sprite;
@@ -64,23 +63,40 @@ module YourTurn {
             this.anchor.setTo(0.5, 0.5);
             this.uid = Number(uid);
             this.player = player;
+            this.inputEnabled = true;
+            this.input.enableDrag();
+
             this.events.onDragStart.add(() => {
-                if (this.mana <= this.player.mana)
+                if (this.player.table.isTurn && this.mana <= this.player.mana) {
+                    Card.current = this;
                     this.input.draggable = true;
-                else
+                }
+                else {
+                    console.log(">>>> this.player.table.isTurn " + this.player.table.isTurn);
+                    Card.current = null;
                     this.input.draggable = false;
-                Card.current = this;
+                }
+                
             }, this);
+
             this.events.onDragStop.add(() => {
-                if (Line.current != null) {
-                    Card.response = Card.current;
-                    this.point = new Phaser.Point(Card.response.x, Card.response.y);
-                    WSController.Play(Card.response.uid, Line.current.id, 0);
-                } else
-                    Card.current.target.go();
-                Card.current = null;
-                    
+                console.log(">>>> Card.current " + Card.current + " Line.current " + Line.current);
+                if (Card.current != null) {
+                    if (Line.current != null) {
+                        console.log(">>>> player.table.OnPlayCard ");
+                        this.point = new Phaser.Point(Card.current.x, Card.current.y);
+                        player.table.OnPlayCard(Card.current.uid, Line.current.id, 0);
+                    } else
+                        Card.current.target.go();
+                    Card.current = null;
+                }                
             }, this);
+
+            this.events.onInputUp.add(() => {
+                if (this.input.draggable == false)
+                    this.input.draggable = true;
+            }, this);
+
             player.table.game.add.existing(this);
         }
 
@@ -96,7 +112,7 @@ module YourTurn {
                 this.addChild(this.sprMana);
             }
             if (attack != "" && this.attack != attack) {
-                console.log("Modify Attack from " + this.attack + " to " + attack)
+//                console.log("Modify Attack from " + this.attack + " to " + attack)
                 this.attack = attack;
                 if (this.sprAttack != null) this.sprAttack.kill();
                 this.sprAttack = new Phaser.Sprite(this.game, 15, 35, 'numbers', this.GetSprite(attack));
@@ -104,7 +120,7 @@ module YourTurn {
                 this.addChild(this.sprAttack);
             }
             if (health != "" && this.myHealth != health) {
-                console.log("Modify Health from " + this.myHealth + " to " + health)
+//                console.log("Modify Health from " + this.myHealth + " to " + health)
                 this.myHealth = health;
                 if (this.sprHealth != null) this.sprHealth.kill();
                 this.sprHealth = new Phaser.Sprite(this.game, 47, 35, 'numbers', 32 + this.GetSprite(health));
@@ -115,22 +131,8 @@ module YourTurn {
 
         update() {
             super.update();
-            if (this == Card.response) {
+            if (this == Card.response)
                 this.WaitingResponse();
-            } 
-
-            if (this.active) {
-                if (Card.response != null && this.inputEnabled) {
-                    this.input.disableDrag();
-                    this.inputEnabled = false;
-                }
-                else
-                    if (Card.response == null && !this.inputEnabled) {
-                        this.inputEnabled = true;
-                        this.input.enableDrag();
-                    }
-            }
-
             this.target.update(this);
         }
 
@@ -144,7 +146,6 @@ module YourTurn {
             return num-1;
         }
 
-        SetActive(value: boolean) { this.active = value; }
         WaitingResponse() {
             var ang = this.game.time.time / 250.0;
             var sd = 32;

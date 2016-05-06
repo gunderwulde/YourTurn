@@ -17,11 +17,13 @@ module YourTurn {
         isTurn: boolean;
         isWaiting: boolean;
         alphaOff: number = 0.2;
+        lastAction: number = 0;
 
         constructor(game: Phaser.Game) {
             this.game = game;
             Table.instance = this;
             this.actions = new Actions(this);
+            this.lastAction = 0;
 
             this.button = this.game.add.button(this.game.world.centerX - 95, this.game.world.height - 100, 'button', this.OnEndTurn, this, 2, 1, 0);
 
@@ -38,9 +40,13 @@ module YourTurn {
         }
 
         SubscribeToActions() {
-            FireBaseController.Instance.subscribeToActions( (time: number, action: string) => {
-                //console.log("ACT!" + time + " >>>> " + action );
-                this.actions.Push(time * 100 + this.game.time.now, action);
+            FireBaseController.Instance.subscribeToActions((time: number, action: string) => {
+                if (this.lastAction == 0) this.lastAction = this.game.time.now;
+                var actionTime = this.lastAction + (time * 100);
+                // Si va retrasado, lo mete para ya.
+                if (actionTime < this.game.time.now) actionTime = this.game.time.now;
+                this.actions.Push(actionTime, action);
+                this.lastAction = actionTime;
             });
         }
 

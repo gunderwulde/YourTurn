@@ -4,6 +4,7 @@ module YourTurn {
 
 
         static googleUrl: string = "https://script.google.com/macros/s/AKfycbyffbjkSf-Zee8LY6vwVaUkc5Ifts7Tuqmh5LWo5mRY/dev";
+//        static googleUrl: string = "https://script.google.com/macros/s/AKfycbwdL24yiQDx8fjphs9dZOe1naGA0B_AEf84uoAhYJ_VVXTQrcF8/exec";
 
         static WannaPlay(session:string) {
             $.ajax({

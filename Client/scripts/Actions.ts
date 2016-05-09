@@ -85,8 +85,13 @@ module YourTurn {
         }
         //P1:DMG:UID[:HEALTH:ATTACK]
         Damage(player: Player, params: Array<string>) {
-            var card = player.GetCardByUID(Number(params[2]));
-            if (card != null) card.Show("", "", params[3], params[4]);
+            if (params[2] == "PLY") {
+                // DAÑO AL JUGADOR.
+                player.SetHealth(Number(params[3]));
+            } else {
+                var card = player.GetCardByUID(Number(params[2]));
+                if (card != null) card.Show("", "", params[3], params[4]);
+            }
         }
         //P1:KIL:UID
         Kill(player: Player, params: Array<string>) {

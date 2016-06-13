@@ -40,8 +40,5 @@
             this.state.add("Game", YourTurn.Game);
         }
 
-        create() {
-            
-        }
     }
 }

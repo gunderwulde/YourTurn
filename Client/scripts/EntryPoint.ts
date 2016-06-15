@@ -40,7 +40,7 @@ f.login(["public_profile"], fbLoginSuccess,
         //            this.scale.aspectRatio = 720 / 1280;
                     this.input.maxPointers = 1;
                     this.stage.disableVisibilityChange = true;
-/*
+
                     var ctrl = new FireBaseController();
                     FireBaseController.Instance.facebookLogin(() => {
                         // Pone en modo Jugar.
@@ -51,7 +51,7 @@ f.login(["public_profile"], fbLoginSuccess,
                     }, () => {
                         alert("Error on facebook login!!");
                     });
-*/
+
                     //this.state.start("Boot", true, false);
                 }
             });

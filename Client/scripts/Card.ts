@@ -55,7 +55,7 @@ module YourTurn {
 
         static Preload(state: Phaser.State) {
             state.load.image('card', 'images/card.png');
-            state.load.spritesheet('numbers', 'images/numbers.png', 32, 32, 27);
+            state.load.spritesheet( 'numbers', 'images/icos.png', 32, 32, 30);
         }
 
         constructor(player: Player, uid: string) {
@@ -107,7 +107,7 @@ module YourTurn {
             }
             if (mana != "") {
                 this.mana = Number( mana );
-                this.sprMana = new Phaser.Sprite(this.game, 47, -35, 'numbers', 20 + this.GetSprite(mana));
+                this.sprMana = new Phaser.Sprite(this.game, 47, -35, 'numbers', 20 +this.mana);
                 this.sprMana.anchor.setTo(0.5, 0.5);
                 this.addChild(this.sprMana);
             }
@@ -115,7 +115,7 @@ module YourTurn {
 //                console.log("Modify Attack from " + this.attack + " to " + attack)
                 this.attack = attack;
                 if (this.sprAttack != null) this.sprAttack.kill();
-                this.sprAttack = new Phaser.Sprite(this.game, 15, 35, 'numbers', 10 +this.GetSprite(attack));
+                this.sprAttack = new Phaser.Sprite(this.game, 15, 35, 'numbers', 10 + Number(attack));
                 this.sprAttack.anchor.setTo(0.5, 0.5);
                 this.addChild(this.sprAttack);
             }
@@ -123,7 +123,7 @@ module YourTurn {
 //                console.log("Modify Health from " + this.myHealth + " to " + health)
                 this.myHealth = health;
                 if (this.sprHealth != null) this.sprHealth.kill();
-                this.sprHealth = new Phaser.Sprite(this.game, 47, 35, 'numbers', 0 + this.GetSprite(health));
+                this.sprHealth = new Phaser.Sprite(this.game, 47, 35, 'numbers', 0 + Number(health));
                 this.sprHealth.anchor.setTo(0.5, 0.5);
                 this.addChild(this.sprHealth);
             }

@@ -13,7 +13,8 @@ var logger,
     et,
     plist,
     xcode,
-    tostr;
+    tostr,
+    fileUtils;
 
 // Other globals
 var hooksPath;
@@ -30,8 +31,11 @@ var applyCustomConfig = (function(){
         "MainActivity" // Cordova >= 4.3.0
     ];
 
-    // Tags that can appear multiple times in the <root> manifest, so must be distinguished by name
-    var androidRootMultiples = ["uses-permission", "permission", "permission-tree", "permission-group", "instrumentation", "uses-sdk", "uses-configuration", "uses-feature", "supports-screens", "compatible-screens", "supports-gl-texture"];
+    // Tags that can appear multiple times in the <root> manifest, distinguished by name
+    var androidRootMultiplesByName = ["uses-permission", "permission", "permission-tree", "permission-group", "instrumentation", "uses-sdk", "uses-configuration", "uses-feature", "supports-screens", "compatible-screens", "supports-gl-texture"];
+    
+    // Tags that can appear multiple times in the <root> manifest, distinguished by label
+    var androidRootMultiplesByLabel = ["intent-filter"];
 
     var xcconfigs = ["build.xcconfig", "build-extras.xcconfig", "build-debug.xcconfig", "build-release.xcconfig"];
 
@@ -235,8 +239,11 @@ var applyCustomConfig = (function(){
 
             } else {
                 //  if there can be multiple sibling elements, we need to select them by unique name
-                if(androidRootMultiples.indexOf(childSelector > -1)){
+                if(androidRootMultiplesByName.indexOf(childSelector) > -1){
                     childSelector += '[@android:name=\'' + data.attrib['android:name'] + '\']';
+                }
+                else if(androidRootMultiplesByLabel.indexOf(childSelector) > -1){
+                    childSelector += '[@android:label=\'' + data.attrib['android:label'] + '\']';
                 }
 
                 childEl = parentEl.find(childSelector);
@@ -324,7 +331,13 @@ var applyCustomConfig = (function(){
         var xcodeProject = xcode.project(xcodeProjectPath);
         xcodeProject.parse(function(err){
             if(err){
-                shell.echo('An error occurred during parsing of [' + xcodeProjectPath + ']: ' + JSON.stringify(err));
+                // shell is undefined if android platform has been removed and added with a new package id but ios stayed the same.
+                var msg = 'An error occurred during parsing of [' + xcodeProjectPath + ']: ' + JSON.stringify(err);
+                if(typeof shell != "undefined" && shell != null){
+                    shell.echo(msg);
+                } else{
+                    logger.error(msg + ' - Maybe you forgot to remove/add the ios platform?');
+                }
             }else{
                 _.each(configItems, function (item) {
                     switch(item.type){
@@ -433,7 +446,7 @@ var applyCustomConfig = (function(){
                 // so if buildType="debug", want to overrwrite in build.xcconfig
                 if(item.name.match("CODE_SIGN_IDENTITY") && itemBuildType == "debug" && fileBuildType == "none" && !item.xcconfigEnforce){
                     doReplace();
-                }              
+                }
             }
         });
 

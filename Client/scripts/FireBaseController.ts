@@ -11,7 +11,9 @@ module YourTurn {
         mySessionRef: FirebaseWithPromise<void>;
    
         constructor() {
-            FireBaseController.Instance = this;            
+            FireBaseController.Instance = this;
+            console.log("FireBaseController.constructor");
+                        
             this.firebase = new Firebase("https://glaring-torch-9586.firebaseio.com/");
             this.mySessionRef = this.firebase.child("sessions").push();
             this.mySessionRef.update({ userID: "", userState: "LogOut", matchID: null });
@@ -19,10 +21,11 @@ module YourTurn {
 //            this.readWriteTest();
         }
 
-        facebookLogin(onOk, onError = null) {
+        facebookLogin(onOk, onError = null) {            
             this.firebase.authWithOAuthPopup("facebook", (error, authData) => {
                 if (!error) {
                     authData.uid = authData.uid.replace(":", "_");
+                    console.log("FireBaseController.facebookLogin "+authData.uid );
                     this.authData = authData;
                     this.mySessionRef.update({ userID: this.authData.uid, userState: "Ready" });
                     if (onOk != null) onOk();
